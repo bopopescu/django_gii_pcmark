@@ -320,6 +320,21 @@ class VideoCard(models.Model):
     width = models.PositiveIntegerField('Ширина', null=True, blank=True)
     length = models.PositiveIntegerField('Длина', null=True, blank=True)
 
+    min_power = models.ForeignKey(
+        PowersDict,
+        on_delete=models.CASCADE,
+        related_name='min_power',
+        null=True,
+        blank=True,
+    )
+    max_power = models.ForeignKey(
+        PowersDict,
+        on_delete=models.CASCADE,
+        related_name='max_power',
+        null=True,
+        blank=True,
+    )
+
     def __str__(self):
         """
         строкове представление объекта

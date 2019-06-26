@@ -127,7 +127,7 @@ class VideoCardAdmin(admin.ModelAdmin):
                 'fields': (
                     ('hdmi_count', 'dvi_count', 'vga_count', 'display_port_count', 'usb_c_count'),
                     ('height', 'width', 'length'),
-                    'power_schema',
+                    ('power_schema', 'min_power', 'max_power'),
                 )
             }
         ),
