@@ -290,7 +290,7 @@ class VideoCard(models.Model):
     model = models.CharField(max_length=100)
 
     # официальная страница
-    official_url = models.URLField(null=True)
+    official_url = models.URLField(null=True, blank=True)
 
     # память
     ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
@@ -304,20 +304,21 @@ class VideoCard(models.Model):
     # процессор
     gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
 
-    gpu_frequency = models.PositiveIntegerField(default=0)
+    gpu_frequency = models.PositiveIntegerField()
+    gpu_frequency_max = models.PositiveIntegerField(null=True, blank=True)
 
     # питание
-    power_schema = models.ForeignKey(MBPowerSchemas, on_delete=models.CASCADE)
+    power_schema = models.ForeignKey(MBPowerSchemas, on_delete=models.CASCADE, null=True, blank=True)
 
-    hdmi_count = models.PositiveSmallIntegerField(default=0)
-    vga_count = models.PositiveSmallIntegerField(default=0)
-    dvi_count = models.PositiveSmallIntegerField(default=0)
-    display_port_count = models.PositiveSmallIntegerField(default=0)
-    usb_c_count = models.PositiveSmallIntegerField(default=0)
+    hdmi_count = models.PositiveSmallIntegerField(null=True, blank=True)
+    vga_count = models.PositiveSmallIntegerField(null=True, blank=True)
+    dvi_count = models.PositiveSmallIntegerField(null=True, blank=True)
+    display_port_count = models.PositiveSmallIntegerField(null=True, blank=True)
+    usb_c_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
-    height = models.PositiveSmallIntegerField('Высота', default=0)
-    width = models.PositiveIntegerField('Ширина', default=0)
-    length = models.PositiveIntegerField('Длина', default=0)
+    height = models.PositiveSmallIntegerField('Высота', null=True, blank=True)
+    width = models.PositiveIntegerField('Ширина', null=True, blank=True)
+    length = models.PositiveIntegerField('Длина', null=True, blank=True)
 
     def __str__(self):
         """

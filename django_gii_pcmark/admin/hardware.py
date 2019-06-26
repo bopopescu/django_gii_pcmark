@@ -108,7 +108,7 @@ class VideoCardAdmin(admin.ModelAdmin):
             'Модель',
             {
                 'fields': (
-                    ('producer', 'model', 'gpu', 'gpu_frequency'),
+                    ('producer', 'model', 'gpu', 'gpu_frequency', 'gpu_frequency_max'),
                     'official_url',
                 )
             }
@@ -132,10 +132,6 @@ class VideoCardAdmin(admin.ModelAdmin):
             }
         ),
     )
-
-    inlines = [
-        FileInline
-    ]
 
 
 class RamAdmin(admin.ModelAdmin):
