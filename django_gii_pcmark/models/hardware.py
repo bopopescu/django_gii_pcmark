@@ -297,7 +297,11 @@ class VideoCard(models.Model):
 
     ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
 
-    ram_frequency = models.PositiveIntegerField()
+    ram_frequency_min = models.PositiveIntegerField(null=True, blank=True)
+    ram_frequency_max = models.PositiveIntegerField(null=True, blank=True)
+
+    ram_speed_min = models.PositiveIntegerField(null=True, blank=True)
+    ram_speed_max = models.PositiveIntegerField(null=True, blank=True)
 
     ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE)
 

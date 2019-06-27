@@ -117,7 +117,8 @@ class VideoCardAdmin(admin.ModelAdmin):
             'Память',
             {
                 'fields': (
-                    ('ram_version', 'ram_size', 'ram_bit', 'ram_frequency'),
+                    ('ram_version', 'ram_size', 'ram_bit'),
+                    ('ram_frequency_min', 'ram_bit_min', 'ram_frequency_max', 'ram_bit_max'),
                 )
             }
         ),
