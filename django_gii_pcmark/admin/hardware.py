@@ -118,7 +118,7 @@ class VideoCardAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('ram_version', 'ram_size', 'ram_bit'),
-                    ('ram_frequency_min', 'ram_bit_min', 'ram_frequency_max', 'ram_bit_max'),
+                    ('ram_frequency_min', 'ram_speed_min', 'ram_frequency_max', 'ram_speed_max'),
                 )
             }
         ),
