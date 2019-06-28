@@ -113,8 +113,10 @@ class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
     """
-    ordering = ('producer', 'model', 'gpu')
-    list_display = ('producer', 'model', 'gpu')
+    ordering = ('-producer', 'model', 'gpu')
+    list_display = ('producer_model', 'gpu')
+    readonly_fields = ('producer_model', )
+    list_filter = ('gpu', )
     fieldsets = (
         (
             'Модель',
@@ -145,6 +147,9 @@ class VideoCardAdmin(admin.ModelAdmin):
             }
         ),
     )
+
+    def producer_model(self, instance):
+        return '{0} {1}'.format(instance.producer, instance.model)
 
 
 class RamAdmin(admin.ModelAdmin):
