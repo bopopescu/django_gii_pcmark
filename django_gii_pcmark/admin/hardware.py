@@ -107,9 +107,6 @@ class MotherBoardAdmin(admin.ModelAdmin):
             }
         ),
     )
-    inlines = [
-        FileInline
-    ]
 
 
 class VideoCardAdmin(admin.ModelAdmin):

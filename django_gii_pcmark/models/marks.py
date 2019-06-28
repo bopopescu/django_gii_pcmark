@@ -18,8 +18,8 @@ class Mark(models.Model):
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
 
     val_min = models.PositiveIntegerField()
-    val_max = models.PositiveIntegerField()
-    val_avg = models.PositiveIntegerField()
+    val_max = models.PositiveIntegerField(null=True, blank=True)
+    val_avg = models.PositiveIntegerField(null=True, blank=True)
     val_dimension = models.CharField(max_length=10)
 
     os = models.ForeignKey(OSDict, on_delete=models.CASCADE, null=True, blank=True)
