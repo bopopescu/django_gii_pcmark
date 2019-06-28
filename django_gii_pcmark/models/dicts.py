@@ -3,10 +3,9 @@
 from django.db import models
 
 
-class ProcessorSeriesDict(models.Model):
+class SimpleNameDict(models.Model):
     """
-    серия процессора
-    core-i3, etc
+    простой справочник имен
     """
 
     name = models.CharField(max_length=100, unique=True)
@@ -16,6 +15,19 @@ class ProcessorSeriesDict(models.Model):
         строковое представление объекта
         """
         return self.name
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        abstract = True
+
+
+class ProcessorSeriesDict(SimpleNameDict):
+    """
+    серия процессора
+    core-i3, etc
+    """
 
     class Meta:
         """
@@ -24,19 +36,11 @@ class ProcessorSeriesDict(models.Model):
         verbose_name_plural = 'Справочник: процессор серия'
 
 
-class ProducersDict(models.Model):
+class ProducersDict(SimpleNameDict):
     """
     производители
     intel, etc
     """
-
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        """
-        строковое представление объекта
-        """
-        return self.name
 
     class Meta:
         """
@@ -45,24 +49,64 @@ class ProducersDict(models.Model):
         verbose_name_plural = 'Справочник: производители'
 
 
-class SocketsDict(models.Model):
+class SocketsDict(SimpleNameDict):
     """
     сокеты
     """
-
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        """
-        строковое представление объекта
-        """
-        return self.name
 
     class Meta:
         """
         мета описание модели
         """
         verbose_name_plural = 'Справочник: процессор сокет'
+
+
+class OSDict(SimpleNameDict):
+    """
+    справочник операционных систем
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: операционные системы'
+
+
+class LanChipsetsDict(SimpleNameDict):
+    """
+    справочник чипсетов сетевых карт
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: чипсеты сетевых карт'
+
+
+class WifiChipsetDict(SimpleNameDict):
+    """
+    справочник чипсетов вай фай карт
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: чипсеты wi-fi карт'
+
+
+class WifiVersionsDict(SimpleNameDict):
+    """
+    справочник версии вай фай карт
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: версии wi-fi карт'
 
 
 class RamSizeDicts(models.Model):
@@ -233,26 +277,6 @@ class RamSpeedRatingDict(models.Model):
         мета описание модели
         """
         verbose_name_plural = 'Справочник: память, рейтинг по частоте'
-
-
-class OSDict(models.Model):
-    """
-    справочник операционных систем
-    """
-
-    name = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        """
-        строковое представление объекта
-        """
-        return self.name
-
-    class Meta:
-        """
-        мета описание модели
-        """
-        verbose_name_plural = 'Справочник: операционные системы'
 
 
 class DXVersionsDict(models.Model):

@@ -70,25 +70,40 @@ class MotherBoardAdmin(admin.ModelAdmin):
         (
             'Модель',
             {
-                'fields': (('producer', 'model', 'form_factor'), ('height', 'width'), 'official_url')
+                'fields': (
+                    ('producer', 'model', 'form_factor'),
+                    ('height', 'width'),
+                    'official_url',
+                )
             }
         ),
         (
             'Чипы и питание',
             {
-                'fields': (('socket', 'power_schema'), ('chipset', 'audio_codec'))
+                'fields': (
+                    ('socket', 'power_schema'),
+                    ('chipset', 'audio_codec'),
+                    ('lan_chipset', 'lan1_speed', 'lan2_speed'),
+                    ('wifi_chipset', 'wifi_versions'),
+                )
             }
         ),
         (
             'ОЗУ',
             {
-                'fields': (('ddr_version', 'ddr_count'), )
+                'fields': (
+                    ('ddr_version', 'ddr_count'),
+                )
             }
         ),
         (
             'Перифирия',
             {
-                'fields': (('hdmi_count', 'dvi_count', 'vga_count'), ('sata6_count', 'sata3_count', 'm2_count'), )
+                'fields': (
+                    ('hdmi_count', 'dvi_count', 'vga_count'),
+                    ('sata6_count', 'sata3_count', 'm2_count'),
+                    ('usb2_count', 'usb3_count'),
+                )
             }
         ),
     )

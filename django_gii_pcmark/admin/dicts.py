@@ -8,7 +8,16 @@ from django_gii_pcmark.models.dicts import (
     RamSizeDicts, SocketsDict, ProducersDict, ProcessorSeriesDict, FanSizesDict, PowersDict,
     RamSpeedRatingDict, MBPowerSchemas, DDRVersionDict, MBFormFactorDict, RamBitDict,
     OSDict, GPUDriversDict, DXVersionsDict, TestSoftDict,
-    TestScreenSizeDict)
+    TestScreenSizeDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict
+)
+
+
+class SimpleNameAdmin(admin.ModelAdmin):
+    """
+    админка для простых именованных справочников
+    """
+    ordering = ('name', )
+    list_display = ('name', )
 
 
 class RamSizeDictAdmin(admin.ModelAdmin):
@@ -17,30 +26,6 @@ class RamSizeDictAdmin(admin.ModelAdmin):
     """
     ordering = ('size', 'dimension')
     list_display = ('size', 'dimension')
-
-
-class SocketsDictAdmin(admin.ModelAdmin):
-    """
-    админка для сокетов
-    """
-    ordering = ('name', )
-    list_display = ('name', )
-
-
-class ProducersDictAdmin(admin.ModelAdmin):
-    """
-    админка для производителей
-    """
-    ordering = ('name', )
-    list_display = ('name', )
-
-
-class ProcessorSeriesDictAdmin(admin.ModelAdmin):
-    """
-    админка для серии процессора
-    """
-    ordering = ('name', )
-    list_display = ('name', )
 
 
 class FanSizesDictAdmin(admin.ModelAdmin):
@@ -99,13 +84,6 @@ class RamBitDictAdmin(admin.ModelAdmin):
     list_display = ('bit', )
 
 
-class OSDictAdmin(admin.ModelAdmin):
-    """
-    админка для операционных систем
-    """
-    ordering = ('name', )
-    list_display = ('name', )
-
 
 class GPUDriversDictAdmin(admin.ModelAdmin):
     """
@@ -140,9 +118,9 @@ class TestScreenSizeDictAdmin(admin.ModelAdmin):
 
 
 admin.site.register(RamSizeDicts, RamSizeDictAdmin)
-admin.site.register(SocketsDict, SocketsDictAdmin)
-admin.site.register(ProducersDict, ProducersDictAdmin)
-admin.site.register(ProcessorSeriesDict, ProcessorSeriesDictAdmin)
+admin.site.register(SocketsDict, SimpleNameAdmin)
+admin.site.register(ProducersDict, SimpleNameAdmin)
+admin.site.register(ProcessorSeriesDict, SimpleNameAdmin)
 admin.site.register(FanSizesDict, FanSizesDictAdmin)
 admin.site.register(PowersDict, PowersDictAdmin)
 admin.site.register(RamSpeedRatingDict, RamSpeedRatingDictAdmin)
@@ -150,8 +128,11 @@ admin.site.register(MBPowerSchemas, MBPowerSchemasAdmin)
 admin.site.register(DDRVersionDict, DDRVersionDictAdmin)
 admin.site.register(MBFormFactorDict, MBFormFactorDictAdmin)
 admin.site.register(RamBitDict, RamBitDictAdmin)
-admin.site.register(OSDict, OSDictAdmin)
+admin.site.register(OSDict, SimpleNameAdmin)
 admin.site.register(GPUDriversDict, GPUDriversDictAdmin)
 admin.site.register(DXVersionsDict, DXVersionsDictAdmin)
 admin.site.register(TestSoftDict, TestSoftDictAdmin)
 admin.site.register(TestScreenSizeDict, TestScreenSizeDictAdmin)
+admin.site.register(LanChipsetsDict, SimpleNameAdmin)
+admin.site.register(WifiVersionsDict, SimpleNameAdmin)
+admin.site.register(WifiChipsetDict, SimpleNameAdmin)

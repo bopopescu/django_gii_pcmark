@@ -10,7 +10,7 @@ from django.db import models
 from django_gii_pcmark.models.dicts import (
     ProcessorSeriesDict, ProducersDict, SocketsDict, RamSizeDicts, PowersDict, FanSizesDict,
     MBPowerSchemas, DDRVersionDict, MBFormFactorDict, RamBitDict,
-    RamSpeedRatingDict)
+    RamSpeedRatingDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict)
 
 
 class CPUGpu(models.Model):
@@ -238,6 +238,17 @@ class MotherBoard(models.Model):
     # количество m2 входов
     m2_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
+    usb2_count = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    usb3_count = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    lan_chipset = models.ForeignKey(LanChipsetsDict, on_delete=models.CASCADE, null=True, blank=True)
+    lan1_speed = models.PositiveSmallIntegerField(null=True, blank=True)
+    lan2_speed = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    wifi_chipset = models.ForeignKey(WifiChipsetDict, on_delete=models.CASCADE, null=True, blank=True)
+    wifi_versions = models.ForeignKey(WifiVersionsDict, on_delete=models.CASCADE, null=True, blank=True)
+
     # количество слотов памяти
     ddr_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
@@ -248,7 +259,7 @@ class MotherBoard(models.Model):
     audio_codec = models.ForeignKey(AudioCodec, on_delete=models.CASCADE)
 
     # официальная страница
-    official_url = models.URLField(null=True)
+    official_url = models.URLField(null=True, blank=True)
 
     # питание
     power_schema = models.ForeignKey(MBPowerSchemas, on_delete=models.CASCADE)
