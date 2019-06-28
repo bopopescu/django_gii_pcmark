@@ -221,22 +221,25 @@ class MotherBoard(models.Model):
     socket = models.ForeignKey(SocketsDict, on_delete=models.CASCADE)
 
     # количество hdmi входов
-    hdmi_count = models.PositiveSmallIntegerField(default=0)
+    hdmi_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # количество dvi входов
-    dvi_count = models.PositiveSmallIntegerField(default=0)
+    dvi_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # количество vga входов
-    vga_count = models.PositiveSmallIntegerField(default=0)
+    vga_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # количество sata3 входов
-    sata3_count = models.PositiveSmallIntegerField(default=0)
+    sata3_count = models.PositiveSmallIntegerField(null=True, blank=True)
+
+    # количество sata3 входов
+    sata6_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # количество m2 входов
-    m2_count = models.PositiveSmallIntegerField(default=0)
+    m2_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # количество слотов памяти
-    ddr_count = models.PositiveSmallIntegerField(default=0)
+    ddr_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
     # ddr версия
     ddr_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
@@ -254,13 +257,13 @@ class MotherBoard(models.Model):
     chipset = models.ForeignKey(MBChipsets, on_delete=models.CASCADE)
 
     # форм фактор
-    form_factor = models.ForeignKey(MBFormFactorDict, on_delete=models.CASCADE)
+    form_factor = models.ForeignKey(MBFormFactorDict, on_delete=models.CASCADE, null=True, blank=True)
 
     # высота
-    height = models.PositiveIntegerField(default=0)
+    height = models.PositiveIntegerField(null=True, blank=True)
 
     # ширина
-    width = models.PositiveIntegerField(default=0)
+    width = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         """

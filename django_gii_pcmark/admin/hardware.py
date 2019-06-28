@@ -88,7 +88,7 @@ class MotherBoardAdmin(admin.ModelAdmin):
         (
             'Перифирия',
             {
-                'fields': (('hdmi_count', 'dvi_count', 'vga_count'), ('sata3_count', 'm2_count'), )
+                'fields': (('hdmi_count', 'dvi_count', 'vga_count'), ('sata6_count', 'sata3_count', 'm2_count'), )
             }
         ),
     )
