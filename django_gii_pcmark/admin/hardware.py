@@ -125,7 +125,7 @@ class VideoCardGpuFilter(admin.SimpleListFilter):
         """
         return [
             (gpu.id, str(gpu))
-            for gpu in GPU.objects.all().order_by('producer', 'model')
+            for gpu in GPU.objects.all().order_by('producer__name', 'model')
         ]
 
     def queryset(self, request, queryset):
