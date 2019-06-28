@@ -109,6 +109,37 @@ class MotherBoardAdmin(admin.ModelAdmin):
     )
 
 
+class VideoCardGpuFilter(admin.SimpleListFilter):
+    """
+    фильтр по gpu
+    """
+    title = 'gpu'
+    parameter_name = 'gpu'
+
+    def lookups(self, request, model_admin):
+        """
+        возвращаем варианты для клиента
+        :param request:
+        :param model_admin:
+        :return:
+        """
+        return [
+            (gpu.id, str(gpu))
+            for gpu in GPU.objects.all().order_by('producer', 'model')
+        ]
+
+    def queryset(self, request, queryset):
+        """
+        фильтруем элементы списка
+        :param request:
+        :param queryset:
+        :return:
+        """
+        value = self.value()
+        if value:
+            return queryset.filter(gpu=value)
+
+
 class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
@@ -116,7 +147,7 @@ class VideoCardAdmin(admin.ModelAdmin):
     ordering = ('-producer', 'model', 'gpu')
     list_display = ('producer_model', 'gpu')
     readonly_fields = ('producer_model', )
-    list_filter = ('gpu', )
+    list_filter = (VideoCardGpuFilter, )
     fieldsets = (
         (
             'Модель',

@@ -12,7 +12,7 @@ with open('requirements.txt') as fh:
 
 setuptools.setup(
     name='django_gii_pcmark',
-    version='0.0.11',
+    version='0.0.12',
     author='Ильнур Гайфутдинов',
     author_email='ilnurgi87@gmail.com',
     description='Бенчмарки pc комплектующих',
