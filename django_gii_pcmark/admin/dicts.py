@@ -97,8 +97,8 @@ class TestSoftDictAdmin(admin.ModelAdmin):
     """
     админка для тестовых программ
     """
-    ordering = ('name', 'mode', 'version')
-    list_display = ('name', 'mode', 'version')
+    ordering = ('name', 'mode')
+    list_display = ('name', 'mode')
 
 
 class DXVersionsDictAdmin(admin.ModelAdmin):

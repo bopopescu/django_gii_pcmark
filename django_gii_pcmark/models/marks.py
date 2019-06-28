@@ -16,6 +16,7 @@ class Mark(models.Model):
     system = models.ForeignKey(System, on_delete=models.CASCADE)
 
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
+    test_soft_version = models.CharField(max_length=100, null=True, blank=True)
 
     val_min = models.PositiveIntegerField()
     val_max = models.PositiveIntegerField(null=True, blank=True)
@@ -44,9 +45,3 @@ class Mark(models.Model):
         мета описание модели
         """
         verbose_name_plural = 'Тесты систем'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['system', 'test_soft', 'screen_size'],
-                name='mark_uniq'
-            )
-        ]

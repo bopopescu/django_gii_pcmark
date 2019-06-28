@@ -336,17 +336,11 @@ class TestSoftDict(models.Model):
 
     mode = models.CharField(max_length=100, null=True, blank=True)
 
-    version = models.CharField(max_length=100, null=True, blank=True)
-
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} {1}{2}'.format(
-            self.name,
-            self.version,
-            ' {}'.format(self.mode) if self.mode else ''
-        )
+        return '{0} {1}'.format(self.name, self.mode)
 
     class Meta:
         """
@@ -355,8 +349,8 @@ class TestSoftDict(models.Model):
         verbose_name_plural = 'Справочник: тестовая программа'
         constraints = [
             models.UniqueConstraint(
-                fields=['name', 'mode', 'version'],
-                name='test_soft_name_mode_version_uniq'
+                fields=['name', 'mode'],
+                name='test_soft_name_version_uniq'
             )
         ]
 
