@@ -84,7 +84,6 @@ class RamBitDictAdmin(admin.ModelAdmin):
     list_display = ('bit', )
 
 
-
 class GPUDriversDictAdmin(admin.ModelAdmin):
     """
     админка для драйверов видеокарт

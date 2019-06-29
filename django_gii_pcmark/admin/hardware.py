@@ -56,10 +56,6 @@ class CPUAdmin(admin.ModelAdmin):
         )
     )
 
-    inlines = [
-        FileInline
-    ]
-
 
 class MotherBoardAdmin(admin.ModelAdmin):
     """
@@ -145,16 +141,22 @@ class VideoCardAdmin(admin.ModelAdmin):
     админка для видеокарт
     """
     ordering = ('producer__name', 'gpu')
-    list_display = ('producer_model', 'gpu')
-    readonly_fields = ('producer_model', )
-    list_filter = (VideoCardGpuFilter, )
+    list_filter = (VideoCardGpuFilter, 'producer')
     fieldsets = (
         (
             'Модель',
             {
                 'fields': (
-                    ('producer', 'model', 'gpu', 'gpu_frequency', 'gpu_frequency_max'),
+                    ('producer', 'model'),
                     'official_url',
+                )
+            }
+        ),
+        (
+            'Процессор',
+            {
+                'fields': (
+                    ('gpu', 'gpu_frequency', 'gpu_frequency_max'),
                 )
             }
         ),
@@ -178,9 +180,6 @@ class VideoCardAdmin(admin.ModelAdmin):
             }
         ),
     )
-
-    def producer_model(self, instance):
-        return '{0} {1}'.format(instance.producer, instance.model)
 
 
 class RamAdmin(admin.ModelAdmin):
@@ -275,6 +274,7 @@ class GPUAdmin(admin.ModelAdmin):
     админка для видеокартных процессоров 
     """
     list_display = ('producer', 'model', 'cores')
+    ordering = ('producer__name', 'model')
 
 
 class CPUFanAdmin(admin.ModelAdmin):

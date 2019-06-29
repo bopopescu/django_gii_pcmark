@@ -190,11 +190,24 @@ class GPU(models.Model):
     # количество ядер
     cores = models.PositiveIntegerField()
 
+    # память
+    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
+    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE)
+    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
+
+    ram_frequency_min = models.PositiveIntegerField(null=True, blank=True)
+    ram_frequency_max = models.PositiveIntegerField(null=True, blank=True)
+
+    ram_speed_min = models.PositiveIntegerField(null=True, blank=True)
+    ram_speed_max = models.PositiveIntegerField(null=True, blank=True)
+
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} {1}'.format(self.producer, self.model)
+        return '{0} {1} ({2} | {3} | {4} bit | {5})'.format(
+            self.producer, self.model, self.cores, self.ram_version, self.ram_bit, self.ram_size
+        )
 
     class Meta:
         """
@@ -307,9 +320,9 @@ class VideoCard(models.Model):
     official_url = models.URLField(null=True, blank=True)
 
     # память
-    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
-
-    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
+    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE, null=True, blank=True)
+    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE, null=True, blank=True)
+    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE, null=True, blank=True)
 
     ram_frequency_min = models.PositiveIntegerField(null=True, blank=True)
     ram_frequency_max = models.PositiveIntegerField(null=True, blank=True)
@@ -317,12 +330,10 @@ class VideoCard(models.Model):
     ram_speed_min = models.PositiveIntegerField(null=True, blank=True)
     ram_speed_max = models.PositiveIntegerField(null=True, blank=True)
 
-    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE)
-
     # процессор
     gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
 
-    gpu_frequency = models.PositiveIntegerField()
+    gpu_frequency = models.PositiveIntegerField(null=True, blank=True)
     gpu_frequency_max = models.PositiveIntegerField(null=True, blank=True)
 
     # питание
