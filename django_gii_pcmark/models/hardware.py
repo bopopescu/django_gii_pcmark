@@ -575,9 +575,9 @@ class System(models.Model):
             mb_model=self.mother_board.model,
             cpu='{0} {1} {2}'.format(self.cpu.producer, self.cpu.series, self.cpu.model),
             ram='{0} {2}x{1}'.format(self.ram.ddr_version, self.ram.size, self.ram_count),
-            gpu='{0}{1}{2}'.format(
-                '{0} '.format(self.gpu_producer) if self.gpu_producer else '',
-                '{0} '.format(self.gpu_model) if self.gpu_model else '',
+            gpu='{2}{0}{1}'.format(
+                ' {0}'.format(self.gpu_producer) if self.gpu_producer else '',
+                ' {0}'.format(self.gpu_model) if self.gpu_model else '',
                 self.video_card
             )
         )[:190]
