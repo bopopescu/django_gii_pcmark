@@ -148,7 +148,6 @@ class VideoCardAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('producer', 'model'),
-                    'official_url',
                 )
             }
         ),
@@ -156,7 +155,8 @@ class VideoCardAdmin(admin.ModelAdmin):
             'Процессор',
             {
                 'fields': (
-                    ('gpu', 'cores', 'gpu_frequency', 'gpu_frequency_max'),
+                    ('gpu', 'cores', ),
+                    ('gpu_frequency', 'gpu_frequency_max', ),
                 )
             }
         ),
