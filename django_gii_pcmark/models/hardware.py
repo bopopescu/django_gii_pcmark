@@ -357,7 +357,7 @@ class VideoCard(models.Model):
         строкове представление объекта
         """
         return (
-            '{gpu}{gpu_freq} ({ram_version} | {ram_bit} bit | {ram_size} | {freq1}{freq2}'.format(
+            '{gpu}{gpu_freq} ({ram_version} | {ram_bit} bit | {ram_size} |{freq1}{freq2})'.format(
                 gpu=self.gpu,
                 ram_version=self.ram_version,
                 ram_bit=self.ram_bit,
@@ -576,7 +576,7 @@ class System(models.Model):
             ' {}'.format(self.ssd or self.hdd) if self.ssd or self.hdd else '',
             ' {}'.format(self.cpu_fan) if self.cpu_fan else '',
             ' {}'.format(self.power_supply) if self.power_supply else '',
-        )
+        )[:200]
 
     class Meta:
         """
