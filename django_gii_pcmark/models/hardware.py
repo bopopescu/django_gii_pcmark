@@ -154,16 +154,34 @@ class CPU(models.Model):
         blank=True,
         related_name='cache')
 
-    # официальная страница
-    official_url = models.URLField(null=True)
-
     gpu = models.ForeignKey(CPUGpu, on_delete=models.CASCADE, null=True, blank=True)
+
+    min_power = models.ForeignKey(
+        PowersDict,
+        on_delete=models.CASCADE,
+        related_name='cpu_min_power',
+        null=True,
+        blank=True,
+    )
+    max_power = models.ForeignKey(
+        PowersDict,
+        on_delete=models.CASCADE,
+        related_name='cpu_max_power',
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} {1} {2}'.format(self.producer, self.series, self.model)
+        return '{0} {1} {2} ({3} | {4})'.format(
+            self.producer,
+            self.series,
+            self.model,
+            self.socket,
+            self.frequency
+        )
 
 
     class Meta:

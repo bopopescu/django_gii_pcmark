@@ -35,12 +35,14 @@ class CPUAdmin(admin.ModelAdmin):
     админка для процессоров
     """
     ordering = ('producer', 'series', 'model')
-    list_display = ('producer', 'series', 'model', 'frequency', 'socket')
     fieldsets = (
         (
             'Модель',
             {
-                'fields': (('producer', 'series', 'model'), 'socket', 'official_url')
+                'fields': (
+                    ('producer', 'series', 'model'),
+                    ('socket', 'gpu',)
+                )
             }
         ),
         (
@@ -50,7 +52,7 @@ class CPUAdmin(admin.ModelAdmin):
                     ('cores_count', 'threads_count'),
                     ('frequency', 'frequency_max'),
                     ('cache', 'cache1_lvl', 'cache2_lvl', 'cache3_lvl'),
-                    'gpu',
+                    ('min_power', 'max_power',)
                 )
             }
         )
@@ -61,7 +63,6 @@ class MotherBoardAdmin(admin.ModelAdmin):
     """
     админка для материнских плат
     """
-    list_display = ('producer', 'model', 'socket')
     fieldsets = (
         (
             'Модель',
