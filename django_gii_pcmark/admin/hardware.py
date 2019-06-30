@@ -228,6 +228,17 @@ class SystemAdmin(admin.ModelAdmin):
     админка для системы
     """
     list_filter = ('mother_board', 'cpu')
+    ordering = (
+        'mother_board__producer__name',
+        'mother_board__model',
+        'cpu__producer__name',
+        'cpu__series__name',
+        'cpu__model',
+        'video_card__producer__name',
+        'video_card__model',
+        'gpu_producer__name',
+        'gpu_model',
+    )
     fields = (
         ('mother_board', 'cpu', ),
         ('video_card', 'gpu_producer', 'gpu_model'),
