@@ -140,7 +140,7 @@ class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
     """
-    ordering = ('producer__name', 'gpu')
+    ordering = ('producer__name', 'model', 'ram_size')
     list_filter = (VideoCardGpuFilter, 'producer')
     fieldsets = (
         (
