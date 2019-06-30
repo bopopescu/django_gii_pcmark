@@ -25,7 +25,6 @@ class TestInline(admin.StackedInline):
     тесты систем
     """
     model = Mark
-    extra = 1
 
     fieldsets = MarkAdmin.fieldsets
 
@@ -34,7 +33,7 @@ class CPUAdmin(admin.ModelAdmin):
     """
     админка для процессоров
     """
-    ordering = ('producer', 'series', 'model')
+    ordering = ('producer__name', 'series__name', 'model')
     fieldsets = (
         (
             'Модель',
@@ -187,7 +186,6 @@ class RamAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('producer', 'model'),
-                    'official_url',
                 )
             }
         ),
@@ -262,7 +260,7 @@ class AudioCodecAdmin(admin.ModelAdmin):
     """
     админка для аудио кодеков
     """
-    list_display = ('producer', 'model')
+    ordering = ('producer__name', 'model')
 
 
 class MBChipsetsAdmin(admin.ModelAdmin):
