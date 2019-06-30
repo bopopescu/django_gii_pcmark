@@ -4,7 +4,7 @@ from django.db import models
 
 from django_gii_pcmark.models.dicts import (
     OSDict, GPUDriversDict, DXVersionsDict, TestSoftDict,
-    TestScreenSizeDict)
+    TestScreenSizeDict, ProducersDict)
 from django_gii_pcmark.models.hardware import System
 
 
@@ -25,6 +25,8 @@ class Mark(models.Model):
 
     os = models.ForeignKey(OSDict, on_delete=models.CASCADE, null=True, blank=True)
 
+    gpu_producer = models.ForeignKey(ProducersDict, on_delete=models.CASCADE, null=True, blank=True)
+    gpu_model = models.CharField(max_length=50, null=True, blank=True)
     gpu_driver = models.ForeignKey(GPUDriversDict, on_delete=models.CASCADE, null=True, blank=True)
 
     overclock_cpu_freq = models.PositiveIntegerField(null=True, blank=True)

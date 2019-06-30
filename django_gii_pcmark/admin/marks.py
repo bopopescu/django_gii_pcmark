@@ -37,15 +37,17 @@ class MarkAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     (
-
                         'overclock_cpu_freq',
+                        'overclock_ram_freq',
+                    ),
+                    (
+                        'gpu_producer',
+                        'gpu_model',
                         'overclock_gpu_core_freq',
                         'overclock_gpu_ram_freq',
-                        'overclock_ram_freq',
                     ),
                     'comments',
                 ),
-                'classes': ('collapse',),
             }
         )
     )
