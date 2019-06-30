@@ -231,7 +231,8 @@ class SystemAdmin(admin.ModelAdmin):
     list_display = ('mother_board', 'cpu', 'ram', 'ram_count', 'video_card', 'ssd', 'hdd', 'cpu_fan')
     fields = (
 
-        ('mother_board', 'cpu', 'video_card'),
+        ('mother_board', 'cpu', ),
+        ('video_card', 'gpu_producer', 'gpu_model'),
         ('ram', 'ram_count'),
         ('ssd', 'hdd'),
         ('cpu_fan', 'power_supply'),

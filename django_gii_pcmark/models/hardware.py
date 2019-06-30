@@ -555,6 +555,9 @@ class System(models.Model):
 
     video_card = models.ForeignKey(VideoCard, on_delete=models.CASCADE, null=True)
 
+    gpu_producer = models.ForeignKey(ProducersDict, on_delete=models.CASCADE, null=True, blank=True)
+    gpu_model = models.CharField(max_length=50, null=True, blank=True)
+
     ssd = models.ForeignKey(SSD, on_delete=models.CASCADE, null=True, blank=True)
 
     hdd = models.ForeignKey(HDD, on_delete=models.CASCADE, null=True, blank=True)
