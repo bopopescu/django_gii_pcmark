@@ -356,11 +356,24 @@ class VideoCard(models.Model):
         """
         строкове представление объекта
         """
-        return '{0} ({1} | {2} bit | {3})'.format(
-            self.gpu,
-            self.ram_version,
-            self.ram_bit,
-            self.ram_size,
+        return (
+            '{gpu} ({ram_version} | {ram_bit} bit | {ram_size})'
+            '{freq1}{freq2}'.format(
+                gpu=self.gpu,
+                ram_version=self.ram_version,
+                ram_bit=self.ram_bit,
+                ram_size=self.ram_size,
+                freq1=(
+                    '{0}/{1}'.format(self.ram_frequency_min or '-', self.ram_speed_min or '-')
+                    if self.ram_frequency_min or self.ram_speed_min
+                    else ''
+                ),
+                freq2=(
+                    '{0}/{1}'.format(self.ram_frequency_max or '-', self.ram_speed_max or '-')
+                    if self.ram_frequency_max or self.ram_speed_max
+                    else ''
+                ),
+            )
         )
 
     class Meta:
