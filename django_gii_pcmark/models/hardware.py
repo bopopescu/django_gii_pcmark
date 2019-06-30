@@ -247,9 +247,6 @@ class MotherBoard(models.Model):
     # количество sata3 входов
     sata3_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
-    # количество sata3 входов
-    sata6_count = models.PositiveSmallIntegerField(null=True, blank=True)
-
     # количество m2 входов
     m2_count = models.PositiveSmallIntegerField(null=True, blank=True)
 
@@ -272,9 +269,6 @@ class MotherBoard(models.Model):
 
     # аудиокодек
     audio_codec = models.ForeignKey(AudioCodec, on_delete=models.CASCADE)
-
-    # официальная страница
-    official_url = models.URLField(null=True, blank=True)
 
     # питание
     power_schema = models.ForeignKey(MBPowerSchemas, on_delete=models.CASCADE)

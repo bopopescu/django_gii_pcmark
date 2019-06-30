@@ -63,6 +63,7 @@ class MotherBoardAdmin(admin.ModelAdmin):
     """
     админка для материнских плат
     """
+    ordering = ('producer__name', 'model')
     fieldsets = (
         (
             'Модель',
@@ -70,7 +71,6 @@ class MotherBoardAdmin(admin.ModelAdmin):
                 'fields': (
                     ('producer', 'model', 'form_factor'),
                     ('height', 'width'),
-                    'official_url',
                 )
             }
         ),
@@ -98,7 +98,7 @@ class MotherBoardAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('hdmi_count', 'dvi_count', 'vga_count'),
-                    ('sata6_count', 'sata3_count', 'm2_count'),
+                    ('sata3_count', 'm2_count'),
                     ('usb2_count', 'usb3_count'),
                 )
             }
