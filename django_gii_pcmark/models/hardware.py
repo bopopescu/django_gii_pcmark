@@ -576,7 +576,7 @@ class System(models.Model):
             ' {}'.format(self.ssd or self.hdd) if self.ssd or self.hdd else '',
             ' {}'.format(self.cpu_fan) if self.cpu_fan else '',
             ' {}'.format(self.power_supply) if self.power_supply else '',
-        )[:200]
+        )[:190]
 
     class Meta:
         """
