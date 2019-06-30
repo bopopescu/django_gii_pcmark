@@ -306,12 +306,6 @@ class VideoCard(models.Model):
     видеокарта
     """
 
-    # производитель
-    producer = models.ForeignKey(ProducersDict, on_delete=models.CASCADE)
-
-    # модель, 8350К
-    model = models.CharField(max_length=100)
-
     gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
 
     cores = models.PositiveIntegerField()
@@ -362,10 +356,8 @@ class VideoCard(models.Model):
         """
         строкове представление объекта
         """
-        return '{0} {1} ({2} | {3} | {4} bit | {5})'.format(
-            self.producer,
-            self.model,
-            self.cores,
+        return '{0} ({1} | {2} bit | {3})'.format(
+            self.gpu,
             self.ram_version,
             self.ram_bit,
             self.ram_size,
@@ -394,8 +386,6 @@ class Ram(models.Model):
     size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
 
     speed_rating = models.ForeignKey(RamSpeedRatingDict, on_delete=models.CASCADE)
-
-    official_url = models.URLField(null=True, blank=True)
 
     def __str__(self):
         """
