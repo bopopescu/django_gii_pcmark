@@ -187,27 +187,11 @@ class GPU(models.Model):
     # модель, 8350К
     model = models.CharField(max_length=100)
 
-    # количество ядер
-    cores = models.PositiveIntegerField()
-
-    # память
-    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
-    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE)
-    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
-
-    ram_frequency_min = models.PositiveIntegerField(null=True, blank=True)
-    ram_frequency_max = models.PositiveIntegerField(null=True, blank=True)
-
-    ram_speed_min = models.PositiveIntegerField(null=True, blank=True)
-    ram_speed_max = models.PositiveIntegerField(null=True, blank=True)
-
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} {1} ({2} | {3} | {4} bit | {5})'.format(
-            self.producer, self.model, self.cores, self.ram_version, self.ram_bit, self.ram_size
-        )
+        return '{0} {1}'.format(self.producer, self.model)
 
     class Meta:
         """
@@ -316,22 +300,20 @@ class VideoCard(models.Model):
     # модель, 8350К
     model = models.CharField(max_length=100)
 
-    # официальная страница
-    official_url = models.URLField(null=True, blank=True)
+    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
+
+    cores = models.PositiveIntegerField()
 
     # память
-    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE, null=True, blank=True)
-    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE, null=True, blank=True)
-    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE, null=True, blank=True)
+    ram_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
+    ram_bit = models.ForeignKey(RamBitDict, on_delete=models.CASCADE)
+    ram_size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
 
     ram_frequency_min = models.PositiveIntegerField(null=True, blank=True)
     ram_frequency_max = models.PositiveIntegerField(null=True, blank=True)
 
     ram_speed_min = models.PositiveIntegerField(null=True, blank=True)
     ram_speed_max = models.PositiveIntegerField(null=True, blank=True)
-
-    # процессор
-    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
 
     gpu_frequency = models.PositiveIntegerField(null=True, blank=True)
     gpu_frequency_max = models.PositiveIntegerField(null=True, blank=True)
@@ -368,18 +350,20 @@ class VideoCard(models.Model):
         """
         строкове представление объекта
         """
-        return '{0} {1} {2}/{3}'.format(self.producer, self.model, self.ram_version, self.ram_size)
+        return '{0} {1} ({2} | {3} | {4} bit | {5})'.format(
+            self.producer,
+            self.model,
+            self.cores,
+            self.ram_version,
+            self.ram_bit,
+            self.ram_size,
+        )
 
     class Meta:
         """
         мета описание модели
         """
         verbose_name_plural = 'Видеокарты'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['producer', 'model', 'gpu', 'ram_version', 'ram_size'],
-                name='vc_producer_model_gpu_ram_version_ram_size_uniq')
-        ]
 
 
 class Ram(models.Model):

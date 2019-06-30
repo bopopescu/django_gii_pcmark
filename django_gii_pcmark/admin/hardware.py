@@ -156,7 +156,7 @@ class VideoCardAdmin(admin.ModelAdmin):
             'Процессор',
             {
                 'fields': (
-                    ('gpu', 'gpu_frequency', 'gpu_frequency_max'),
+                    ('gpu', 'cores', 'gpu_frequency', 'gpu_frequency_max'),
                 )
             }
         ),
@@ -273,7 +273,6 @@ class GPUAdmin(admin.ModelAdmin):
     """
     админка для видеокартных процессоров 
     """
-    list_display = ('producer', 'model', 'cores')
     ordering = ('producer__name', 'model')
 
 

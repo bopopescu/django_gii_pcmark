@@ -17,7 +17,6 @@ class SimpleNameAdmin(admin.ModelAdmin):
     админка для простых именованных справочников
     """
     ordering = ('name', )
-    list_display = ('name', )
 
 
 class RamSizeDictAdmin(admin.ModelAdmin):
