@@ -234,8 +234,8 @@ class SystemAdmin(admin.ModelAdmin):
         'cpu__producer__name',
         'cpu__series__name',
         'cpu__model',
-        'video_card__producer__name',
-        'video_card__model',
+        'video_card__gpu__producer__name',
+        'video_card__gpu__model',
         'gpu_producer__name',
         'gpu_model',
     )
