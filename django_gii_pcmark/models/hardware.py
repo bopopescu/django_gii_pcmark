@@ -570,15 +570,16 @@ class System(models.Model):
         """
         строкове представление объекта
         """
-        return '{0} {1} {2}x{3}{4}{5}{6}{7}'.format(
-            self.mother_board,
-            self.cpu,
-            self.ram,
-            self.ram_count,
-            ' {}'.format(self.video_card) if self.video_card else '',
-            ' {}'.format(self.ssd or self.hdd) if self.ssd or self.hdd else '',
-            ' {}'.format(self.cpu_fan) if self.cpu_fan else '',
-            ' {}'.format(self.power_supply) if self.power_supply else '',
+        return '{mb_producer} {mb_model} {cpu} {ram} {gpu}'.format(
+            mb_producer=self.mother_board.producer,
+            mb_model=self.mother_board.model,
+            cpu='{0} {1} {2}'.format(self.cpu.producer, self.cpu.series, self.cpu.model),
+            ram='{0} {1}x{2}'.format(self.ram.ddr_version, self.ram.size, self.ram_count),
+            gpu='{0}{1}{2}'.format(
+                '{0} '.format(self.gpu_producer) or '',
+                '{0} '.format(self.gpu_model) or '',
+                self.video_card
+            )
         )[:190]
 
     class Meta:

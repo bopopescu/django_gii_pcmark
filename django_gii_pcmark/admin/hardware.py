@@ -228,9 +228,7 @@ class SystemAdmin(admin.ModelAdmin):
     админка для системы
     """
     list_filter = ('mother_board', 'cpu')
-    list_display = ('mother_board', 'cpu', 'ram', 'ram_count', 'video_card', 'ssd', 'hdd', 'cpu_fan')
     fields = (
-
         ('mother_board', 'cpu', ),
         ('video_card', 'gpu_producer', 'gpu_model'),
         ('ram', 'ram_count'),
