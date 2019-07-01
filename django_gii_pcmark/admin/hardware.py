@@ -178,7 +178,7 @@ class RamAdmin(admin.ModelAdmin):
     """
     админка для оперативной памяти
     """
-    list_display = ('producer', 'model', 'ddr_version', 'speed_rating')
+    ordering = ('producer__name', 'ddr_version__version', 'speed_rating', 'model')
 
     fieldsets = (
         (
