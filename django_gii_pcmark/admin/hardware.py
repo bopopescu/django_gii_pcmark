@@ -25,7 +25,7 @@ class TestInline(admin.StackedInline):
     тесты систем
     """
     model = Mark
-
+    extra = 10
     fieldsets = MarkAdmin.fieldsets
 
 

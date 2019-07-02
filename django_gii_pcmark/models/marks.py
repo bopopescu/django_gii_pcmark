@@ -21,7 +21,6 @@ class Mark(models.Model):
     val_min = models.PositiveIntegerField()
     val_max = models.PositiveIntegerField(null=True, blank=True)
     val_avg = models.PositiveIntegerField(null=True, blank=True)
-    val_dimension = models.CharField(max_length=10)
 
     os = models.ForeignKey(OSDict, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -33,8 +32,6 @@ class Mark(models.Model):
     overclock_gpu_core_freq = models.PositiveIntegerField(null=True, blank=True)
     overclock_gpu_ram_freq = models.PositiveIntegerField(null=True, blank=True)
     overclock_ram_freq = models.PositiveIntegerField(null=True, blank=True)
-
-    directx_version = models.ForeignKey(DXVersionsDict, on_delete=models.CASCADE, null=True, blank=True)
 
     comments = models.TextField(null=True, blank=True)
 

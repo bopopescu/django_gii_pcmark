@@ -336,11 +336,17 @@ class TestSoftDict(models.Model):
 
     mode = models.CharField(max_length=100, null=True, blank=True)
 
+    dimension = models.CharField(max_length=10, null=True, blank=True)
+
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} {1}'.format(self.name, self.mode)
+        return '{0}{1}{2}'.format(
+            self.name,
+            ' {0}'.format(self.mode) if self.mode else '',
+            ' {0}'.format(self.dimension) if self.dimension else ''
+        )
 
     class Meta:
         """
