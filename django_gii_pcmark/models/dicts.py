@@ -109,6 +109,18 @@ class WifiVersionsDict(SimpleNameDict):
         verbose_name_plural = 'Справочник: версии wi-fi карт'
 
 
+class TestQualityDict(SimpleNameDict):
+    """
+    справочник настроек теста
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: тест режим настроек'
+
+
 class RamSizeDicts(models.Model):
     """
     размеры памяти
@@ -277,26 +289,6 @@ class RamSpeedRatingDict(models.Model):
         мета описание модели
         """
         verbose_name_plural = 'Справочник: память, рейтинг по частоте'
-
-
-class DXVersionsDict(models.Model):
-    """
-    справочник версии dx
-    """
-
-    version = models.CharField(max_length=100, unique=True)
-
-    def __str__(self):
-        """
-        строковое представление объекта
-        """
-        return self.version
-
-    class Meta:
-        """
-        мета описание модели
-        """
-        verbose_name_plural = 'Справочник: версии directx'
 
 
 class GPUDriversDict(models.Model):

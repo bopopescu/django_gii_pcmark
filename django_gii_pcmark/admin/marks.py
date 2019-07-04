@@ -11,7 +11,7 @@ class MarkAdmin(admin.ModelAdmin):
     """
     админка для теста
     """
-    list_display = ('system', 'test_soft', 'val_min', 'val_avg', 'val_max')
+    list_display = ('system', 'test_soft', 'val_min', 'val_avg', 'val_max', 'test_quality')
 
     fieldsets = (
         (
@@ -19,7 +19,7 @@ class MarkAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('system', 'screen_size'),
-                    ('test_soft', 'test_soft_version', 'os', 'gpu_driver'),
+                    ('test_soft', 'test_soft_version', 'os', 'gpu_driver', 'test_quality'),
                     'url',
                 )
             }

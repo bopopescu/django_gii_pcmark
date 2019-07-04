@@ -3,8 +3,8 @@
 from django.db import models
 
 from django_gii_pcmark.models.dicts import (
-    OSDict, GPUDriversDict, DXVersionsDict, TestSoftDict,
-    TestScreenSizeDict, ProducersDict)
+    OSDict, GPUDriversDict, TestSoftDict, TestScreenSizeDict, ProducersDict, TestQualityDict
+)
 from django_gii_pcmark.models.hardware import System
 
 
@@ -17,6 +17,7 @@ class Mark(models.Model):
 
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
     test_soft_version = models.CharField(max_length=100, null=True, blank=True)
+    test_quality = models.ForeignKey(TestQualityDict, null=True, blank=True, on_delete=models.CASCADE)
 
     val_min = models.PositiveIntegerField()
     val_max = models.PositiveIntegerField(null=True, blank=True)
@@ -38,6 +39,13 @@ class Mark(models.Model):
     url = models.URLField()
 
     screen_size = models.ForeignKey(TestScreenSizeDict, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        """
+        строковое представление объекта
+        :return:
+        """
+        return '{0} {1}'.format(self.test_soft, self.screen_size)
 
     class Meta:
         """
