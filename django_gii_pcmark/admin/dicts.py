@@ -7,8 +7,8 @@ from django.contrib import admin
 from django_gii_pcmark.models.dicts import (
     RamSizeDicts, SocketsDict, ProducersDict, ProcessorSeriesDict, FanSizesDict, PowersDict,
     RamSpeedRatingDict, MBPowerSchemas, DDRVersionDict, MBFormFactorDict, RamBitDict,
-    OSDict, GPUDriversDict, TestSoftDict, TestQualityDict,
-    TestScreenSizeDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict
+    OSDict, GPUDriversDict, TestSoftDict, TestQualityDict, AntiAliasingDict,
+    TestScreenSizeDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict, DXVersionsDict,
 )
 
 
@@ -134,3 +134,5 @@ admin.site.register(TestScreenSizeDict, TestScreenSizeDictAdmin)
 admin.site.register(LanChipsetsDict, SimpleNameAdmin)
 admin.site.register(WifiVersionsDict, SimpleNameAdmin)
 admin.site.register(WifiChipsetDict, SimpleNameAdmin)
+admin.site.register(DXVersionsDict, SimpleNameAdmin)
+admin.site.register(AntiAliasingDict, SimpleNameAdmin)
