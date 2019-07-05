@@ -121,6 +121,30 @@ class TestQualityDict(SimpleNameDict):
         verbose_name_plural = 'Справочник: тест режим настроек'
 
 
+class DXVersionsDict(SimpleNameDict):
+    """
+    справочник версии DX
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: тест версии DX'
+
+
+class AntiAliasingDict(SimpleNameDict):
+    """
+    справочник версии AA
+    """
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Справочник: тест версии AA'
+
+
 class RamSizeDicts(models.Model):
     """
     размеры памяти

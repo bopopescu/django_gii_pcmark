@@ -3,7 +3,8 @@
 from django.db import models
 
 from django_gii_pcmark.models.dicts import (
-    OSDict, GPUDriversDict, TestSoftDict, TestScreenSizeDict, ProducersDict, TestQualityDict
+    OSDict, GPUDriversDict, TestSoftDict, TestScreenSizeDict, ProducersDict, TestQualityDict,
+    DXVersionsDict, AntiAliasingDict
 )
 from django_gii_pcmark.models.hardware import System
 
@@ -18,6 +19,8 @@ class Mark(models.Model):
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
     test_soft_version = models.CharField(max_length=100, null=True, blank=True)
     test_quality = models.ForeignKey(TestQualityDict, null=True, blank=True, on_delete=models.CASCADE)
+    directx_version = models.ForeignKey(DXVersionsDict, on_delete=models.CASCADE, null=True, blank=True)
+    anti_aliasing_version = models.ForeignKey(AntiAliasingDict, on_delete=models.CASCADE, null=True, blank=True)
 
     val_min = models.PositiveIntegerField()
     val_max = models.PositiveIntegerField(null=True, blank=True)

@@ -19,7 +19,8 @@ class MarkAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('system', 'screen_size'),
-                    ('test_soft', 'test_soft_version', 'os', 'gpu_driver', 'test_quality'),
+                    ('os', 'gpu_driver'),
+                    ('test_soft', 'test_soft_version', 'test_quality', 'directx_version', 'anti_aliasing_version'),
                     'url',
                 )
             }
