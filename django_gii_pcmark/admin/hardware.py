@@ -225,6 +225,8 @@ class SystemAdmin(admin.ModelAdmin):
     """
     админка для системы
     """
+    save_as = True
+    save_on_top = True
     list_filter = ('mother_board', 'cpu')
     ordering = (
         'mother_board__producer__name',
