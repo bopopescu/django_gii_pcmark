@@ -5,12 +5,10 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 
-from django_gii_pcmark.admin.marks import MarkAdmin
 from django_gii_pcmark.models.hardware import (
     CPU, MotherBoard, VideoCard, Ram, SSD, HDD, PowerSupply, System, FilesCT, AudioCodec,
     MBChipsets, GPU, CPUGpu, CPUFan,
 )
-from django_gii_pcmark.models.marks import Mark
 
 
 class FileInline(GenericTabularInline):
@@ -18,15 +16,6 @@ class FileInline(GenericTabularInline):
     файлы железок
     """
     model = FilesCT
-
-
-class TestInline(admin.StackedInline):
-    """
-    тесты систем
-    """
-    model = Mark
-    extra = 15
-    fieldsets = MarkAdmin.fieldsets
 
 
 class CPUAdmin(admin.ModelAdmin):
@@ -246,9 +235,6 @@ class SystemAdmin(admin.ModelAdmin):
         ('ssd', 'hdd'),
         ('cpu_fan', 'power_supply'),
     )
-    inlines = [
-        TestInline
-    ]
 
 
 class FilesCTAdmin(admin.ModelAdmin):
