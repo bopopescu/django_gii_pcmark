@@ -11,18 +11,15 @@ class MarkAdmin(admin.ModelAdmin):
     """
     админка для теста
     """
-    list_display = ('system', 'test_soft', 'val_min', 'val_avg', 'val_max', 'test_quality')
 
     fieldsets = (
         (
             'Стенд и окружение',
             {
                 'fields': (
-                    ('system', 'screen_size'),
-                    ('os', 'gpu_driver'),
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
-                    'url',
+                    'comments',
                 )
             }
         ),
@@ -34,23 +31,6 @@ class MarkAdmin(admin.ModelAdmin):
                 )
             }
         ),
-        (
-            'Доп параметры',
-            {
-                'fields': (
-                    (
-                        'overclock_cpu_freq',
-                        'overclock_ram_freq',
-                    ),
-                    (
-                        'overclock_gpu_core_freq',
-                        'overclock_gpu_ram_freq',
-                    ),
-                    'comments',
-                ),
-                # 'classes': ('collapse',),
-            }
-        )
     )
 
 

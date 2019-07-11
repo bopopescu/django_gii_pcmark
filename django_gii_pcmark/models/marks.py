@@ -44,7 +44,6 @@ class Mark(models.Model):
     модель теста
     """
 
-    system = models.ForeignKey(System, on_delete=models.CASCADE, blank=True)
     test_pack = models.ForeignKey(TestPack, on_delete=models.CASCADE)
 
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
@@ -57,33 +56,14 @@ class Mark(models.Model):
     val_max = models.PositiveIntegerField(null=True, blank=True)
     val_avg = models.PositiveIntegerField(null=True, blank=True)
 
-    os = models.ForeignKey(OSDict, on_delete=models.CASCADE, null=True, blank=True)
-    gpu_driver = models.ForeignKey(GPUDriversDict, on_delete=models.CASCADE, null=True, blank=True)
-
-    overclock_cpu_freq = models.PositiveIntegerField(null=True, blank=True)
-    overclock_gpu_core_freq = models.PositiveIntegerField(null=True, blank=True)
-    overclock_gpu_ram_freq = models.PositiveIntegerField(null=True, blank=True)
-    overclock_ram_freq = models.PositiveIntegerField(null=True, blank=True)
-
     comments = models.TextField(null=True, blank=True)
-
-    url = models.URLField(null=True, blank=True)
-
-    screen_size = models.ForeignKey(TestScreenSizeDict, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         """
         строковое представление объекта
         :return:
         """
-        return '{0} {1}'.format(self.test_soft, self.screen_size)
-
-    def save(self, *args, **kwargs):
-        """
-        сохраненение
-        """
-        self.system = self.test_pack.system
-        super().save(*args, **kwargs)
+        return '{0} {1}'.format(self.test_pack, self.id)
 
     class Meta:
         """
