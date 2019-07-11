@@ -78,6 +78,19 @@ class TestPackAdmin(admin.ModelAdmin):
     inlines = [
         MarkInline
     ]
+    ordering = (
+        'system__mother_board__producer__name',
+        'system__mother_board__model',
+        'system__cpu__producer__name',
+        'system__cpu__series__name',
+        'system__cpu__model',
+        'system__video_card__gpu__producer__name',
+        'system__video_card__gpu__model',
+        'system__gpu_producer__name',
+        'system__gpu_model',
+        'screen_size__width',
+        'screen_size__height',
+    )
     # readonly_fields = (
     #     'system'
     # )

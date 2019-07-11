@@ -570,7 +570,7 @@ class System(models.Model):
         """
         строкове представление объекта
         """
-        return '{mb_producer} {mb_model} {cpu} {ram} {gpu}'.format(
+        return '{mb_producer} {mb_model} {cpu} {gpu} {ram}'.format(
             mb_producer=self.mother_board.producer,
             mb_model=self.mother_board.model,
             cpu='{0} {1} {2}'.format(self.cpu.producer, self.cpu.series, self.cpu.model),
