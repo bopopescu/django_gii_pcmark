@@ -19,6 +19,7 @@ class MarkAdmin(admin.ModelAdmin):
                 'fields': (
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
+                    'screen_size',
                     'comments',
                 )
             }
