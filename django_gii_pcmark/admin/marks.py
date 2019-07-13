@@ -19,7 +19,7 @@ class MarkAdmin(admin.ModelAdmin):
                 'fields': (
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
-                    'screen_size',
+                    ('screen_size', 'url', 'os', 'gpu_driver'),
                     'comments',
                 )
             }
@@ -41,7 +41,26 @@ class MarkInline(admin.StackedInline):
     """
     model = Mark
     extra = 15
-    fieldsets = MarkAdmin.fieldsets
+    fieldsets = (
+        (
+            'Стенд и окружение',
+            {
+                'fields': (
+                    ('test_soft', 'test_soft_version'),
+                    ('test_quality', 'anti_aliasing_version', 'directx_version'),
+                    'comments',
+                )
+            }
+        ),
+        (
+            'Показатели',
+            {
+                'fields': (
+                    ('val_min', 'val_avg', 'val_max'),
+                )
+            }
+        ),
+    )
 
 
 class TestPackAdmin(admin.ModelAdmin):
@@ -92,12 +111,6 @@ class TestPackAdmin(admin.ModelAdmin):
         'screen_size__width',
         'screen_size__height',
     )
-    # readonly_fields = (
-    #     'system'
-    # )
-
-
-
 
 admin.site.register(Mark, MarkAdmin)
 admin.site.register(TestPack, TestPackAdmin)

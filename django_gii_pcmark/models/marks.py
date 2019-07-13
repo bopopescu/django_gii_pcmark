@@ -1,9 +1,10 @@
 # модели тестов
 
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from django_gii_pcmark.models.dicts import (
-    OSDict, GPUDriversDict, TestSoftDict, TestScreenSizeDict, ProducersDict, TestQualityDict,
+    OSDict, GPUDriversDict, TestSoftDict, TestScreenSizeDict, TestQualityDict,
     DXVersionsDict, AntiAliasingDict
 )
 from django_gii_pcmark.models.hardware import System
@@ -44,7 +45,8 @@ class Mark(models.Model):
     модель теста
     """
 
-    test_pack = models.ForeignKey(TestPack, on_delete=models.CASCADE)
+    test_pack = models.ForeignKey(TestPack, on_delete=models.CASCADE, null=True)
+    system = models.ForeignKey(System, on_delete=models.CASCADE, blank=True)
 
     test_soft = models.ForeignKey(TestSoftDict, on_delete=models.CASCADE)
     test_soft_version = models.CharField(max_length=100, null=True, blank=True)
@@ -53,11 +55,21 @@ class Mark(models.Model):
     anti_aliasing_version = models.ForeignKey(AntiAliasingDict, on_delete=models.CASCADE, null=True, blank=True)
     screen_size = models.ForeignKey(TestScreenSizeDict, on_delete=models.CASCADE, blank=True, null=True)
 
+    url = models.URLField()
+    os = models.ForeignKey(OSDict, on_delete=models.CASCADE, null=True, blank=True)
+    gpu_driver = models.ForeignKey(GPUDriversDict, on_delete=models.CASCADE, null=True, blank=True)
+
     val_min = models.PositiveIntegerField()
     val_max = models.PositiveIntegerField(null=True, blank=True)
     val_avg = models.PositiveIntegerField(null=True, blank=True)
 
     comments = models.TextField(null=True, blank=True)
+
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Тесты систем'
 
     def __str__(self):
         """
@@ -66,8 +78,36 @@ class Mark(models.Model):
         """
         return '{0} {1}'.format(self.test_pack, self.id)
 
-    class Meta:
+    def validate_unique(self, exclude=None):
         """
-        мета описание модели
+        валидация на уникальность
+        :param exclude:
+        :return:
         """
-        verbose_name_plural = 'Тесты систем'
+        exists_query = Mark.objects.filter(
+            system=self.system,
+            test_soft=self.test_soft,
+            test_quality=self.test_quality,
+            screen_size=self.screen_size,
+        )
+        if self.id:
+            exists_query = exists_query.exclude(id=self.id)
+
+        if exists_query.exists():
+            raise ValidationError('System exists')
+
+    def save(self, *args, **kwargs):
+        """
+        сохранение модели
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if self.system is None:
+            self.system = self.test_pack.system
+            self.url = self.test_pack.url
+            self.screen_size = self.test_pack.screen_size
+            self.os = self.test_pack.os
+            self.gpu_driver = self.test_pack.gpu_driver
+
+        super(Mark, self).save(*args, **kwargs)

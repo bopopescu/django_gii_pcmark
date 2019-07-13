@@ -5,12 +5,14 @@ from time import time
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from django_gii_pcmark.models.dicts import (
     ProcessorSeriesDict, ProducersDict, SocketsDict, RamSizeDicts, PowersDict, FanSizesDict,
     MBPowerSchemas, DDRVersionDict, MBFormFactorDict, RamBitDict,
-    RamSpeedRatingDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict)
+    RamSpeedRatingDict, LanChipsetsDict, WifiChipsetDict, WifiVersionsDict
+)
 
 
 class CPUGpu(models.Model):
@@ -566,6 +568,18 @@ class System(models.Model):
 
     power_supply = models.ForeignKey(PowerSupply, on_delete=models.CASCADE, blank=True, null=True)
 
+    class Meta:
+        """
+        мета описание модели
+        """
+        verbose_name_plural = 'Система'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['mother_board', 'cpu', 'ram', 'ram_count', 'video_card', 'ssd', 'hdd'],
+                name='system_uniq'
+            )
+        ]
+
     def __str__(self):
         """
         строкове представление объекта
@@ -582,17 +596,30 @@ class System(models.Model):
             )
         )[:190]
 
-    class Meta:
+    def validate_unique(self, exclude=None):
         """
-        мета описание модели
+        валидация на уникальность
+        :param exclude:
+        :return:
         """
-        verbose_name_plural = 'Система'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['mother_board', 'cpu', 'ram', 'ram_count', 'video_card', 'ssd', 'hdd'],
-                name='system_uniq'
-            )
-        ]
+        exists_query = System.objects.filter(
+            mother_board=self.mother_board,
+            cpu=self.cpu,
+            ram=self.ram,
+            ram_count=self.ram_count,
+            video_card=self.video_card,
+            gpu_producer=self.gpu_producer,
+            gpu_model=self.gpu_model,
+            ssd=self.ssd,
+            hdd=self.hdd,
+            cpu_fan=self.cpu_fan,
+            power_supply=self.power_supply,
+        )
+        if self.id:
+            exists_query = exists_query.exclude(id=self.id)
+
+        if exists_query.exists():
+            raise ValidationError('System exists')
 
 
 def upload_to(instance, filename):
