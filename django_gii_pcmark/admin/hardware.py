@@ -221,7 +221,7 @@ class MarkInline(admin.StackedInline):
     ordering = (
         'test_soft__name',
         'test_soft__mode',
-        'test_quality'
+        'test_quality__name'
     )
 
 
