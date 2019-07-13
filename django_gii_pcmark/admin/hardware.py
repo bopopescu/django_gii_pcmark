@@ -132,6 +132,7 @@ class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
     """
+    save_as = True
     ordering = ('producer__name', 'model', 'ram_size')
     list_filter = (VideoCardProducerFilter, )
     list_display = ('__str__', 'produce_date')
