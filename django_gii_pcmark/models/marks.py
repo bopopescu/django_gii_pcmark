@@ -89,6 +89,7 @@ class Mark(models.Model):
             test_soft=self.test_soft,
             test_quality=self.test_quality,
             screen_size=self.screen_size,
+            val_min=self.val_min,
         )
         if self.id:
             exists_query = exists_query.exclude(id=self.id)
