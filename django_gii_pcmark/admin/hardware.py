@@ -231,7 +231,7 @@ class SystemAdmin(admin.ModelAdmin):
     """
     save_as = True
     save_on_top = True
-    list_filter = ('mother_board', 'cpu', 'video_card')
+    list_filter = ('mother_board', 'cpu', 'video_card__gpu__model')
     ordering = (
         'mother_board__producer__name',
         'mother_board__model',
