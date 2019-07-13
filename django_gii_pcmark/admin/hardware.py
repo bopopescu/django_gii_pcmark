@@ -9,7 +9,7 @@ from django_gii_pcmark.admin.marks import MarkAdmin
 from django_gii_pcmark.models.dicts import ProducersDict
 from django_gii_pcmark.models.hardware import (
     CPU, MotherBoard, VideoCard, Ram, SSD, HDD, PowerSupply, System, FilesCT, AudioCodec,
-    MBChipsets, GPU, CPUGpu, CPUFan,
+    MBChipsets, CPUGpu, CPUFan,
 )
 from django_gii_pcmark.models.marks import Mark
 
@@ -31,7 +31,7 @@ class CPUAdmin(admin.ModelAdmin):
             'Модель',
             {
                 'fields': (
-                    ('producer', 'series', 'model'),
+                    ('producer', 'series', 'model', 'produce_date'),
                     ('socket', 'gpu',)
                 )
             }
@@ -61,7 +61,7 @@ class MotherBoardAdmin(admin.ModelAdmin):
             {
                 'fields': (
                     ('producer', 'model', 'form_factor'),
-                    ('height', 'width'),
+                    ('produce_date', 'height', 'width'),
                 )
             }
         ),
@@ -97,43 +97,12 @@ class MotherBoardAdmin(admin.ModelAdmin):
     )
 
 
-class VideoCardGpuFilter(admin.SimpleListFilter):
-    """
-    фильтр по gpu
-    """
-    title = 'gpu'
-    parameter_name = 'gpu'
-
-    def lookups(self, request, model_admin):
-        """
-        возвращаем варианты для клиента
-        :param request:
-        :param model_admin:
-        :return:
-        """
-        return [
-            (gpu.id, str(gpu))
-            for gpu in GPU.objects.all().order_by('producer__name', 'model')
-        ]
-
-    def queryset(self, request, queryset):
-        """
-        фильтруем элементы списка
-        :param request:
-        :param queryset:
-        :return:
-        """
-        value = self.value()
-        if value:
-            return queryset.filter(gpu=value)
-
-
 class VideoCardProducerFilter(admin.SimpleListFilter):
     """
     фильтр по производителям
     """
     title = 'производитель'
-    parameter_name = 'gpu_producer'
+    parameter_name = 'producer'
 
     def lookups(self, request, model_admin):
         """
@@ -156,22 +125,22 @@ class VideoCardProducerFilter(admin.SimpleListFilter):
         """
         value = self.value()
         if value:
-            return queryset.filter(gpu__producer=value)
+            return queryset.filter(producer=value)
 
 
 class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
     """
-    ordering = ('gpu__producer__name', 'gpu__model', 'ram_size')
-    list_filter = (VideoCardProducerFilter, VideoCardGpuFilter, )
+    ordering = ('producer__name', 'model', 'ram_size')
+    list_filter = (VideoCardProducerFilter, )
     fieldsets = (
         (
             'Процессор',
             {
                 'fields': (
-                    ('gpu', 'cores', ),
-                    ('gpu_frequency', 'gpu_frequency_max', ),
+                    ('producer', 'model', 'cores', 'produce_date'),
+                    ('gpu_frequency', 'gpu_frequency_max'),
                 )
             }
         ),
@@ -208,7 +177,7 @@ class RamAdmin(admin.ModelAdmin):
             'Модель',
             {
                 'fields': (
-                    ('producer', 'model'),
+                    ('producer', 'model', 'produce_date'),
                 )
             }
         ),
@@ -263,24 +232,25 @@ class SystemAdmin(admin.ModelAdmin):
     """
     save_as = True
     save_on_top = True
-    list_filter = ('mother_board', 'cpu', 'video_card__gpu__model')
+    list_filter = ('mother_board', 'cpu', 'video_card__model')
     ordering = (
         'mother_board__producer__name',
         'mother_board__model',
         'cpu__producer__name',
         'cpu__series__name',
         'cpu__model',
-        'video_card__gpu__producer__name',
-        'video_card__gpu__model',
+        'video_card__producer__name',
+        'video_card__model',
         'gpu_producer__name',
         'gpu_model',
     )
     fields = (
-        ('mother_board', 'cpu', ),
+        ('mother_board', 'cpu'),
         ('video_card', 'gpu_producer', 'gpu_model'),
         ('ram', 'ram_count'),
         ('ssd', 'hdd'),
         ('cpu_fan', 'power_supply'),
+        'produce_date'
     )
     inlines = [
         MarkInline
@@ -308,13 +278,6 @@ class MBChipsetsAdmin(admin.ModelAdmin):
     list_display = ('producer', 'model')
 
 
-class GPUAdmin(admin.ModelAdmin):
-    """
-    админка для видеокартных процессоров 
-    """
-    ordering = ('producer__name', 'model')
-
-
 class CPUFanAdmin(admin.ModelAdmin):
     """
     админка для процессорных кулеров
@@ -340,6 +303,5 @@ admin.site.register(System, SystemAdmin)
 admin.site.register(FilesCT, FilesCTAdmin)
 admin.site.register(AudioCodec, AudioCodecAdmin)
 admin.site.register(MBChipsets, MBChipsetsAdmin)
-admin.site.register(GPU, GPUAdmin)
 admin.site.register(CPUFan, CPUFanAdmin)
 admin.site.register(CPUGpu, CPUGpuAdmin)

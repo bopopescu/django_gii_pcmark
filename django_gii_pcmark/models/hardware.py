@@ -113,6 +113,8 @@ class CPU(models.Model):
     # серия процессора, core-i3, ...
     series = models.ForeignKey(ProcessorSeriesDict, on_delete=models.CASCADE)
 
+    produce_date = models.DateField(null=True, blank=True)
+
     # модель, 8350К
     model = models.CharField(max_length=100)
 
@@ -196,33 +198,6 @@ class CPU(models.Model):
         ]
 
 
-class GPU(models.Model):
-    """
-    графический процессор
-    """
-
-    # производитель
-    producer = models.ForeignKey(ProducersDict, on_delete=models.CASCADE)
-
-    # модель, 8350К
-    model = models.CharField(max_length=100)
-
-    def __str__(self):
-        """
-        строковое представление объекта
-        """
-        return '{0} {1}'.format(self.producer, self.model)
-
-    class Meta:
-        """
-        мета описание модели
-        """
-        verbose_name_plural = 'Процессоры графические'
-        constraints = [
-            models.UniqueConstraint(fields=['producer', 'model'], name='gpu_producer_model_uniq')
-        ]
-
-
 class MotherBoard(models.Model):
     """
     материнская плата
@@ -233,6 +208,8 @@ class MotherBoard(models.Model):
 
     # модель, 8350К
     model = models.CharField(max_length=100)
+
+    produce_date = models.DateField(null=True, blank=True)
 
     # сокет
     socket = models.ForeignKey(SocketsDict, on_delete=models.CASCADE)
@@ -308,7 +285,11 @@ class VideoCard(models.Model):
     видеокарта
     """
 
-    gpu = models.ForeignKey(GPU, on_delete=models.CASCADE)
+    # производитель
+    producer = models.ForeignKey(ProducersDict, on_delete=models.CASCADE)
+
+    # модель, 8350К
+    model = models.CharField(max_length=100)
 
     cores = models.PositiveIntegerField()
 
@@ -354,13 +335,17 @@ class VideoCard(models.Model):
         blank=True,
     )
 
+    produce_date = models.DateField(null=True, blank=True)
+
     def __str__(self):
         """
         строкове представление объекта
         """
         return (
-            '{gpu}{gpu_freq} ({ram_version} | {ram_bit} bit | {ram_size} |{freq1}{freq2})'.format(
-                gpu=self.gpu,
+            '{producer} {model} {cores} {gpu_freq} ({ram_version} | {ram_bit} bit | {ram_size} |{freq1}{freq2})'.format(
+                producer=self.producer,
+                model=self.model,
+                cores=self.cores,
                 ram_version=self.ram_version,
                 ram_bit=self.ram_bit,
                 ram_size=self.ram_size,
@@ -400,6 +385,8 @@ class Ram(models.Model):
     # модель, 8350К
     model = models.CharField(max_length=100)
 
+    produce_date = models.DateField(null=True, blank=True)
+
     ddr_version = models.ForeignKey(DDRVersionDict, on_delete=models.CASCADE)
 
     size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
@@ -433,6 +420,8 @@ class SSD(models.Model):
     # модель, 8350К
     model = models.CharField(max_length=100)
 
+    produce_date = models.DateField(null=True, blank=True)
+
     # размер
     size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
 
@@ -462,6 +451,8 @@ class HDD(models.Model):
 
     # модель, 8350К
     model = models.CharField(max_length=100)
+
+    produce_date = models.DateField(null=True, blank=True)
 
     # размер
     size = models.ForeignKey(RamSizeDicts, on_delete=models.CASCADE)
@@ -499,6 +490,8 @@ class PowerSupply(models.Model):
     # размер вентилятора
     fan_size = models.ForeignKey(FanSizesDict, on_delete=models.CASCADE)
 
+    produce_date = models.DateField(null=True, blank=True)
+
     def __str__(self):
         """
         строковое представление объекта
@@ -525,6 +518,8 @@ class CPUFan(models.Model):
 
     # модель, 8350К
     model = models.CharField(max_length=100)
+
+    produce_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
         """
@@ -567,6 +562,8 @@ class System(models.Model):
     cpu_fan = models.ForeignKey(CPUFan, on_delete=models.CASCADE, null=True, blank=True)
 
     power_supply = models.ForeignKey(PowerSupply, on_delete=models.CASCADE, blank=True, null=True)
+
+    produce_date = models.DateField(null=True, blank=True)
 
     class Meta:
         """
@@ -620,6 +617,29 @@ class System(models.Model):
 
         if exists_query.exists():
             raise ValidationError('System exists')
+
+    def save(self, *args, **kwargs):
+        """
+        сохранение модели
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        if self.produce_date:
+            for field_name in (
+                'mother_board', 'cpu', 'ram', 'video_card', 'ssd', 'hdd',
+                'cpu_fan', 'power_supply'
+            ):
+                field = getattr(self, field_name)
+
+                if not field:
+                    continue
+
+                if not field.produce_date or field.produce_date > self.produce_date:
+                    field.produce_date = self.produce_date
+                    field.save()
+
+        super().save(*args, **kwargs)
 
 
 def upload_to(instance, filename):

@@ -2,6 +2,7 @@
 
 from django.db import migrations
 
+
 def move_test_to_test_pack(apps, schema):
     """
 
