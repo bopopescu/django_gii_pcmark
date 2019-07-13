@@ -255,6 +255,10 @@ class SystemAdmin(admin.ModelAdmin):
     inlines = [
         MarkInline
     ]
+    search_fields = (
+        'cpu__model',
+        'video_card__model',
+    )
 
 
 class FilesCTAdmin(admin.ModelAdmin):
