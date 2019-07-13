@@ -6,6 +6,7 @@ from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 
 from django_gii_pcmark.admin.marks import MarkAdmin
+from django_gii_pcmark.models.dicts import ProducersDict
 from django_gii_pcmark.models.hardware import (
     CPU, MotherBoard, VideoCard, Ram, SSD, HDD, PowerSupply, System, FilesCT, AudioCodec,
     MBChipsets, GPU, CPUGpu, CPUFan,
@@ -127,12 +128,43 @@ class VideoCardGpuFilter(admin.SimpleListFilter):
             return queryset.filter(gpu=value)
 
 
+class VideoCardProducerFilter(admin.SimpleListFilter):
+    """
+    фильтр по производителям
+    """
+    title = 'производитель'
+    parameter_name = 'gpu_producer'
+
+    def lookups(self, request, model_admin):
+        """
+        возвращаем варианты для клиента
+        :param request:
+        :param model_admin:
+        :return:
+        """
+        return [
+            (producer.id, str(producer.name))
+            for producer in ProducersDict.objects.filter(name__in=('AMD', 'Nvidia')).order_by('name')
+        ]
+
+    def queryset(self, request, queryset):
+        """
+        фильтруем элементы списка
+        :param request:
+        :param queryset:
+        :return:
+        """
+        value = self.value()
+        if value:
+            return queryset.filter(gpu__producer=value)
+
+
 class VideoCardAdmin(admin.ModelAdmin):
     """
     админка для видеокарт
     """
     ordering = ('gpu__producer__name', 'gpu__model', 'ram_size')
-    list_filter = (VideoCardGpuFilter, )
+    list_filter = (VideoCardProducerFilter, VideoCardGpuFilter, )
     fieldsets = (
         (
             'Процессор',
