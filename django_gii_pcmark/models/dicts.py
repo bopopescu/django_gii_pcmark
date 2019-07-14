@@ -352,7 +352,7 @@ class TestSoftDict(models.Model):
 
     mode = models.CharField(max_length=100, null=True, blank=True)
 
-    dimension = models.CharField(max_length=10, null=True, blank=True)
+    dimension = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         """
@@ -369,12 +369,6 @@ class TestSoftDict(models.Model):
         мета описание модели
         """
         verbose_name_plural = 'Справочник: тестовая программа'
-        constraints = [
-            models.UniqueConstraint(
-                fields=['name', 'mode'],
-                name='test_soft_name_version_uniq'
-            )
-        ]
 
 
 class TestScreenSizeDict(models.Model):

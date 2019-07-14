@@ -65,6 +65,11 @@ class Mark(models.Model):
 
     comments = models.TextField(null=True, blank=True)
 
+    overclock_cpu_freq = models.PositiveIntegerField(null=True, blank=True)
+    overclock_gpu_core_freq = models.PositiveIntegerField(null=True, blank=True)
+    overclock_gpu_ram_freq = models.PositiveIntegerField(null=True, blank=True)
+    overclock_ram_freq = models.PositiveIntegerField(null=True, blank=True)
+
     class Meta:
         """
         мета описание модели
@@ -110,5 +115,9 @@ class Mark(models.Model):
             self.screen_size = self.test_pack.screen_size
             self.os = self.test_pack.os
             self.gpu_driver = self.test_pack.gpu_driver
+            self.overclock_cpu_freq = self.test_pack.overclock_cpu_freq
+            self.overclock_gpu_core_freq = self.test_pack.overclock_gpu_core_freq
+            self.overclock_gpu_ram_freq = self.test_pack.overclock_gpu_ram_freq
+            self.overclock_ram_freq = self.test_pack.overclock_ram_freq
 
         super(Mark, self).save(*args, **kwargs)
