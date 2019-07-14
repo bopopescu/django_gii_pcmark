@@ -83,6 +83,17 @@ class Mark(models.Model):
         """
         return '{0} {1}'.format(self.test_pack, self.id)
 
+    def clean(self):
+        if not hasattr(self, 'system') and not hasattr(self, 'test_pack'):
+            raise ValidationError('mark don\'t have system and test_pack')
+
+        if not hasattr(self, 'system') and hasattr(self, 'test_pack'):
+            self.system = self.test_pack.system
+
+        if hasattr(self, 'test_pack'):
+            if not self.screen_size and self.test_pack.screen_size:
+                self.screen_size = self.test_pack.screen_size
+
     def validate_unique(self, exclude=None):
         """
         валидация на уникальность
@@ -109,17 +120,23 @@ class Mark(models.Model):
         :param kwargs:
         :return:
         """
-        if self.system is None:
-            self.system = self.test_pack.system
-            self.url = self.test_pack.url
-            self.os = self.test_pack.os
-            self.gpu_driver = self.test_pack.gpu_driver
-            self.overclock_cpu_freq = self.test_pack.overclock_cpu_freq
-            self.overclock_gpu_core_freq = self.test_pack.overclock_gpu_core_freq
-            self.overclock_gpu_ram_freq = self.test_pack.overclock_gpu_ram_freq
-            self.overclock_ram_freq = self.test_pack.overclock_ram_freq
+        if self.test_pack:
+            for field_name in (
+                    'url',
+                    'os',
+                    'gpu_driver',
+                    'overclock_cpu_freq',
+                    'overclock_gpu_core_freq',
+                    'overclock_gpu_ram_freq',
+                    'overclock_ram_freq',
+            ):
+                if getattr(self, field_name):
+                    continue
 
-            if not self.screen_size and self.test_pack.screen_size:
-                self.screen_size = self.test_pack.screen_size
+                tp_field = getattr(self.test_pack, field_name)
+                if not tp_field:
+                    continue
+
+                setattr(self, field_name, tp_field)
 
         super(Mark, self).save(*args, **kwargs)
