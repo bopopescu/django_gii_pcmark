@@ -224,7 +224,8 @@ class MarkInline(admin.StackedInline):
     ordering = (
         'test_soft__name',
         'test_soft__mode',
-        'test_quality__name'
+        'test_quality__name',
+        'screen_size__width',
     )
 
 

@@ -20,8 +20,14 @@ class MarkAdmin(admin.ModelAdmin):
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
                     ('screen_size', 'url', 'os', 'gpu_driver'),
+                    (
+                        'overclock_cpu_freq',
+                        'overclock_ram_freq',
+                        'overclock_gpu_core_freq',
+                        'overclock_gpu_ram_freq',
+                    ),
                     'comments',
-                )
+                ),
             }
         ),
         (
@@ -48,12 +54,6 @@ class MarkInline(admin.StackedInline):
                 'fields': (
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
-                    (
-                        'overclock_cpu_freq',
-                        'overclock_ram_freq',
-                        'overclock_gpu_core_freq',
-                        'overclock_gpu_ram_freq',
-                    ),
                     'comments',
                 )
             }
@@ -110,8 +110,8 @@ class TestPackAdmin(admin.ModelAdmin):
         'system__cpu__producer__name',
         'system__cpu__series__name',
         'system__cpu__model',
-        'system__video_card__gpu__producer__name',
-        'system__video_card__gpu__model',
+        'system__video_card__producer__name',
+        'system__video_card__model',
         'system__gpu_producer__name',
         'system__gpu_model',
         'screen_size__width',
