@@ -48,6 +48,12 @@ class MarkInline(admin.StackedInline):
                 'fields': (
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
+                    (
+                        'overclock_cpu_freq',
+                        'overclock_ram_freq',
+                        'overclock_gpu_core_freq',
+                        'overclock_gpu_ram_freq',
+                    ),
                     'comments',
                 )
             }
