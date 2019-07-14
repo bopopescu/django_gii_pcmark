@@ -4,19 +4,53 @@
 
 from django.contrib import admin
 
+from django_gii_pcmark.models.dicts import ProducersDict
 from django_gii_pcmark.models.marks import Mark, TestPack
+
+
+class VideoCardProducerFilter(admin.SimpleListFilter):
+    """
+    фильтр по производителям
+    """
+    title = 'производитель'
+    parameter_name = 'vc_producer'
+
+    def lookups(self, request, model_admin):
+        """
+        возвращаем варианты для клиента
+        :param request:
+        :param model_admin:
+        :return:
+        """
+        return [
+            (producer.id, str(producer.name))
+            for producer in ProducersDict.objects.filter(name__in=('AMD', 'Nvidia')).order_by('name')
+        ]
+
+    def queryset(self, request, queryset):
+        """
+        фильтруем элементы списка
+        :param request:
+        :param queryset:
+        :return:
+        """
+        value = self.value()
+        if value:
+            return queryset.filter(system__video_card__producer=value)
 
 
 class MarkAdmin(admin.ModelAdmin):
     """
     админка для теста
     """
+    save_as = True
 
     fieldsets = (
         (
             'Стенд и окружение',
             {
                 'fields': (
+                    'system',
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
                     ('screen_size', 'url', 'os', 'gpu_driver'),
@@ -39,6 +73,12 @@ class MarkAdmin(admin.ModelAdmin):
             }
         ),
     )
+    list_filter = (
+        VideoCardProducerFilter,
+        'system__mother_board',
+        'system__cpu__series',
+        'test_soft__name',
+    )
 
 
 class MarkInline(admin.StackedInline):
@@ -54,6 +94,7 @@ class MarkInline(admin.StackedInline):
                 'fields': (
                     ('test_soft', 'test_soft_version'),
                     ('test_quality', 'anti_aliasing_version', 'directx_version'),
+                    'screen_size',
                     'comments',
                 )
             }

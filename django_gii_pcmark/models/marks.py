@@ -112,12 +112,14 @@ class Mark(models.Model):
         if self.system is None:
             self.system = self.test_pack.system
             self.url = self.test_pack.url
-            self.screen_size = self.test_pack.screen_size
             self.os = self.test_pack.os
             self.gpu_driver = self.test_pack.gpu_driver
             self.overclock_cpu_freq = self.test_pack.overclock_cpu_freq
             self.overclock_gpu_core_freq = self.test_pack.overclock_gpu_core_freq
             self.overclock_gpu_ram_freq = self.test_pack.overclock_gpu_ram_freq
             self.overclock_ram_freq = self.test_pack.overclock_ram_freq
+
+            if not self.screen_size and self.test_pack.screen_size:
+                self.screen_size = self.test_pack.screen_size
 
         super(Mark, self).save(*args, **kwargs)

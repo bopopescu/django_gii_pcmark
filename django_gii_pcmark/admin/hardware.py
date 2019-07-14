@@ -5,7 +5,6 @@
 from django.contrib import admin
 from django.contrib.contenttypes.admin import GenericTabularInline
 
-from django_gii_pcmark.admin.marks import MarkAdmin
 from django_gii_pcmark.models.dicts import ProducersDict
 from django_gii_pcmark.models.hardware import (
     CPU, MotherBoard, VideoCard, Ram, SSD, HDD, PowerSupply, System, FilesCT, AudioCodec,
@@ -134,7 +133,7 @@ class VideoCardAdmin(admin.ModelAdmin):
     """
     save_as = True
     ordering = ('producer__name', 'model', 'ram_size')
-    list_filter = (VideoCardProducerFilter, )
+    list_filter = (VideoCardProducerFilter,)
     list_display = ('__str__', 'produce_date')
     fieldsets = (
         (
@@ -220,10 +219,37 @@ class MarkInline(admin.StackedInline):
     тесты систем
     """
     model = Mark
-    fieldsets = MarkAdmin.fieldsets
+    fieldsets = (
+        (
+            'Стенд и окружение',
+            {
+                'fields': (
+                    ('test_soft', 'test_soft_version'),
+                    ('test_quality', 'anti_aliasing_version', 'directx_version'),
+                    ('screen_size', 'url', 'os', 'gpu_driver'),
+                    (
+                        'overclock_cpu_freq',
+                        'overclock_ram_freq',
+                        'overclock_gpu_core_freq',
+                        'overclock_gpu_ram_freq',
+                    ),
+                    'comments',
+                ),
+            }
+        ),
+        (
+            'Показатели',
+            {
+                'fields': (
+                    ('val_min', 'val_avg', 'val_max'),
+                )
+            }
+        ),
+    )
     ordering = (
         'test_soft__name',
         'test_soft__mode',
+        'test_soft__dimension',
         'test_quality__name',
         'screen_size__width',
     )
