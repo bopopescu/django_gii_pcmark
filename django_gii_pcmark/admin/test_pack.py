@@ -133,7 +133,6 @@ class VideoCardFilter(admin.SimpleListFilter):
         :param model_admin:
         :return:
         """
-        print(request.GET)
         if request.GET.get('mb') or request.GET.get('cpu'):
             with connection.cursor() as cursor:
                 cursor.execute(
@@ -193,7 +192,7 @@ class VideoCardFilter(admin.SimpleListFilter):
         """
         value = self.value()
         if value:
-            return queryset.filter(system__videocard__model=value)
+            return queryset.filter(system__video_card__model=value)
 
 
 class MarkInline(admin.StackedInline):
