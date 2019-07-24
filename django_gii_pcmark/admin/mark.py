@@ -26,7 +26,6 @@ class DuplicateValuesFilter(admin.SimpleListFilter):
         """
         return (('1', 'одинаковые'), )
 
-
     def queryset(self, request, queryset):
         """
         фильтруем элементы списка
@@ -172,6 +171,7 @@ class MarkAdmin(admin.ModelAdmin):
         'mark_system',
         'test_soft',
         'values',
+        'screen_size',
     )
     ordering = (
         'test_soft__name',

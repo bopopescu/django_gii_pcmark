@@ -134,6 +134,7 @@ class VideoCardAdmin(admin.ModelAdmin):
     save_as = True
     ordering = ('producer__name', 'model', 'ram_size')
     list_filter = (VideoCardProducerFilter,)
+    search_fields = ('model', )
     list_display = ('__str__', 'produce_date')
     fieldsets = (
         (
