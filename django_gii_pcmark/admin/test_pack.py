@@ -96,6 +96,14 @@ class TestPackAdmin(admin.ModelAdmin):
         'screen_size__width',
         'screen_size__height',
     )
+    autocomplete_fields = (
+        'system',
+    )
     inlines = [
         MarkInline
     ]
+
+    class Media:
+        css = {
+            'all': ('django_gii_pcmark/test_pack.css', )
+        }
