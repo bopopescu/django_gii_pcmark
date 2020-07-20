@@ -218,13 +218,13 @@ class MBPowerSchemas(models.Model):
     """
 
     main = models.PositiveSmallIntegerField()
-    slave = models.PositiveSmallIntegerField()
+    subordinate = models.PositiveSmallIntegerField()
 
     def __str__(self):
         """
         строковое представление объекта
         """
-        return '{0} x {1}'.format(self.main, self.slave)
+        return '{0} x {1}'.format(self.main, self.subordinate)
 
     class Meta:
         """

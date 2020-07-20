@@ -55,8 +55,8 @@ class MBPowerSchemasAdmin(admin.ModelAdmin):
     """
     админка для схемы питания матринских плат
     """
-    ordering = ('main', 'slave')
-    list_display = ('main', 'slave')
+    ordering = ('main', 'subordinate')
+    list_display = ('main', 'subordinate')
 
 
 class DDRVersionDictAdmin(admin.ModelAdmin):
